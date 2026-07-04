@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruturaj Deshmukh | Contact</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Abstract glowing blobs for intense glassmorphism effect -->
+    <div class="blob top-left"></div>
+    <div class="blob bottom-right"></div>
+    <div class="blob center"></div>
+
+    <nav>
+        <a href="index.html" class="brand">Ruturaj.</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="about.html" class="nav-item">About</a>
+            <a href="skills.html" class="nav-item">Skills</a>
+            <a href="projects.html" class="nav-item">Projects</a>
+            <a href="contact.html" class="nav-item">Contact</a>
+            
+            <label class="ios-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="ios-slider"></span>
+            </label>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        
+        <div class="grid-2">
+            <div class="glass-card">
+                <h3>Contact Information</h3>
+                <p>Feel free to reach out to me for any work or suggestions below.</p>
+                
+                <div style="margin-top: 30px;">
+                    <p><strong>Email:</strong> ruturajdeshmukh0096@gmail.com</p>
+                    <p><strong>Phone:</strong> +91 9405991996</p>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/ruturajdeshmukh96" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/RuturajDeshmukh96" target="_blank">GitHub</a>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h3>Send a Message</h3>
+                <!-- Forms using formsubmit.co which will send directly to user's email -->
+                <form action="https://formsubmit.co/ruturajdeshmukh0096@gmail.com" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <input type="text" name="_subject" placeholder="Subject" required>
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    
+                    <!-- FormSubmit Configuration -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
