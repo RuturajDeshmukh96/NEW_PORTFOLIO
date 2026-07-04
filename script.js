@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
     // Handle Active Navigation Link matching current page URL
     const navLinks = document.querySelectorAll('.nav-links a.nav-item');
     const currentPath = window.location.pathname.toLowerCase();
@@ -35,6 +36,50 @@ document.addEventListener('DOMContentLoaded', () => {
             link.classList.add('active');
         }
     });
+
+    // ---- Hamburger Menu ----
+    const hamburger = document.getElementById('hamburger');
+    const navLinksContainer = document.getElementById('nav-links');
+    const overlay = document.getElementById('nav-overlay');
+
+    function openMenu() {
+        navLinksContainer.classList.add('open');
+        overlay.classList.add('open');
+        hamburger.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        navLinksContainer.classList.remove('open');
+        overlay.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    if (hamburger && navLinksContainer && overlay) {
+        hamburger.addEventListener('click', () => {
+            if (navLinksContainer.classList.contains('open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        // Close when tapping the overlay
+        overlay.addEventListener('click', closeMenu);
+
+        // Close when a nav link is tapped (navigates anyway, but cleans up)
+        navLinksContainer.querySelectorAll('a.nav-item').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
+        });
+    }
 
     // Dynamic Typing Effect for Skills on Home Page
     const skillElement = document.getElementById('dynamic-skill');
@@ -79,3 +124,4 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(type, 1000);
     }
 });
+

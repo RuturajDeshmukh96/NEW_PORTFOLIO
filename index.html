@@ -12,9 +12,13 @@
     <div class="blob bottom-right"></div>
     <div class="blob center"></div>
 
+    <div class="nav-overlay" id="nav-overlay"></div>
     <nav>
         <a href="index.html" class="brand">Ruturaj.</a>
-        <div class="nav-links">
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
             <a href="index.html" class="nav-item">Home</a>
             <a href="about.html" class="nav-item">About</a>
             <a href="skills.html" class="nav-item">Skills</a>
@@ -36,7 +40,7 @@
                    I am skilled in <span id="dynamic-skill">Java</span><span class="cursor">|</span>
                 </h2>
                 <p>Passionate about creating innovative solutions and currently pursuing my MCA. I specialize in backend development, AI integrations, and responsive web applications.</p>
-                <div style="display: flex; gap: 20px; margin-top: 30px;">
+                <div class="hero-cta" style="display: flex; gap: 20px; margin-top: 30px;">
                     <a href="projects.html" class="btn">View My Work</a>
                     <a href="contact.html" class="btn outline">Contact Me</a>
                 </div>

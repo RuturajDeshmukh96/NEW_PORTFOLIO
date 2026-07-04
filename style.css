@@ -588,24 +588,117 @@ input:focus, textarea:focus {
 }
 
 /* =============================================
-   MOBILE / ANDROID PERFORMANCE FIXES
-   (Desktop UI is completely unchanged)
+   HAMBURGER MENU
    ============================================= */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  border-radius: 10px;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.hamburger:hover { background: rgba(0,0,0,0.05); }
+body.dark-mode .hamburger:hover { background: rgba(255,255,255,0.08); }
 
-/* Tablet & smaller desktop */
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2.5px;
+  background: var(--text-color);
+  border-radius: 3px;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+/* =============================================
+   TABLET (≤ 900px)
+   ============================================= */
 @media (max-width: 900px) {
-  nav { flex-direction: column; gap: 15px; padding: 20px; }
-  .nav-links { flex-wrap: wrap; justify-content: center; display: flex; gap: 15px; }
-  .hero { flex-direction: column; text-align: center; margin-top: 80px; }
+  .hero { flex-direction: column; text-align: center; gap: 40px; }
+  .hero-text { order: 2; }
+  .hero-image { order: 1; width: 260px; height: 330px; margin: 0 auto; }
   .grid-2 { grid-template-columns: 1fr; }
-  .hero-image { width: 300px; height: 400px; margin: 0 auto; }
   .glass-project-card { flex-direction: column; }
-  .project-img-wrapper { max-width: 100%; height: 250px; }
+  .project-img-wrapper { max-width: 100%; min-width: unset; height: 220px; }
+  .hero-text h1, .animated-name { font-size: 3.2rem; }
+  .skills-carousel, .hero-text h2 { font-size: 1.7rem; }
+  .section-title { font-size: 2.8rem; }
 }
 
-/* Mobile & Android — all heavy GPU effects disabled */
+/* =============================================
+   MOBILE (≤ 768px) — hamburger + perf fixes
+   ============================================= */
 @media (max-width: 768px) {
-  /* 1. Kill backdrop-filter blur: THE #1 cause of lag on Android Chrome */
+
+  /* ---------- NAVBAR ---------- */
+  nav {
+    padding: 16px 5% !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+  .brand { font-size: 1.5rem; }
+
+  .hamburger { display: flex; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(80vw, 300px);
+    height: 100dvh;
+    background: var(--nav-bg);
+    border-left: 1px solid var(--card-border);
+    padding: 90px 30px 40px;
+    z-index: 999;
+    overflow-y: auto;
+    box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    transform: translateX(100%);
+  }
+  .nav-links.open {
+    display: flex;
+    transform: translateX(0);
+  }
+  .nav-links a.nav-item {
+    font-size: 1.2rem;
+    padding: 14px 0;
+    width: 100%;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .nav-links a.nav-item:last-of-type { border-bottom: none; }
+  .ios-switch { margin-left: 0; margin-top: 24px; }
+
+  /* Nav overlay */
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 998;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-overlay.open { display: block; }
+
+  /* ---------- PERFORMANCE: Kill heavy GPU effects ---------- */
   *,
   *::before,
   *::after {
@@ -613,45 +706,45 @@ input:focus, textarea:focus {
     -webkit-backdrop-filter: none !important;
   }
 
-  /* 2. Replace blurred glass bg with solid fallback so cards still look good */
+  .blob {
+    animation: none !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+    opacity: 0.1 !important;
+    width: 180px !important;
+    height: 180px !important;
+  }
+  .hero-image {
+    animation: fadeIn 0.8s ease forwards !important;
+  }
+  .glass-card::before { display: none !important; }
+
+  /* Solid fallback backgrounds */
   .glass-card {
-    background: rgba(255, 255, 255, 0.85) !important;
+    background: rgba(255, 255, 255, 0.88) !important;
   }
   body.dark-mode .glass-card {
-    background: rgba(20, 20, 30, 0.92) !important;
+    background: rgba(18, 18, 28, 0.93) !important;
   }
   .glass-project-card {
-    background: rgba(255, 255, 255, 0.85) !important;
+    background: rgba(255, 255, 255, 0.88) !important;
   }
   body.dark-mode .glass-project-card {
-    background: rgba(20, 20, 30, 0.92) !important;
+    background: rgba(18, 18, 28, 0.93) !important;
   }
   nav {
     background: rgba(253, 251, 251, 0.97) !important;
   }
   body.dark-mode nav {
-    background: rgba(10, 10, 15, 0.97) !important;
+    background: rgba(8, 8, 12, 0.97) !important;
+  }
+  body.dark-mode .nav-links {
+    background: rgba(8, 8, 12, 0.98) !important;
   }
 
-  /* 3. Kill blob animations & blur — very expensive on mobile */
-  .blob {
-    animation: none !important;
-    filter: none !important;
-    mix-blend-mode: normal !important;
-    opacity: 0.12 !important;
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  /* 4. Kill float animation on hero image — causes continuous repaint */
-  .hero-image {
-    animation: fadeIn 0.8s ease forwards !important;
-  }
-
-  /* 5. Disable all hover transforms — prevents sticky hover bug on touch */
+  /* Kill sticky hover transforms on touch */
   .glass-card:hover,
   .glass-project-card:hover,
-  .glass-card:hover::before,
   .btn:hover,
   .tag:hover,
   .nav-links a:hover,
@@ -660,38 +753,88 @@ input:focus, textarea:focus {
     box-shadow: var(--shadow) !important;
   }
 
-  /* 6. Prevent shimmer pseudo-element animation on mobile */
-  .glass-card::before {
-    display: none !important;
+  /* ---------- LAYOUT ---------- */
+  .container {
+    padding: 100px 5% 60px !important;
+  }
+  .hero {
+    min-height: auto !important;
+    padding-top: 20px !important;
+    gap: 30px !important;
+  }
+  .hero-text { order: 2; }
+  .hero-image { order: 1; }
+
+  /* Hero CTA buttons — wrap nicely */
+  .hero-cta {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+  .hero-cta .btn { text-align: center; width: 100%; }
+
+  /* ---------- TYPOGRAPHY ---------- */
+  .hero-text h1, .animated-name { font-size: 2.6rem !important; }
+  .skills-carousel, .hero-text h2 { font-size: 1.3rem !important; }
+  .section-title { font-size: 2rem !important; letter-spacing: 1px !important; }
+  .project-info h3 { font-size: 1.3rem !important; }
+  .glass-card h2 { font-size: 1.7rem !important; }
+  .glass-card h3 { font-size: 1.3rem !important; }
+  .glass-card p, .glass-card ul { font-size: 1rem !important; }
+
+  /* ---------- CARDS ---------- */
+  .glass-card { padding: 22px !important; border-radius: 20px !important; }
+  .project-info { padding: 20px !important; }
+  .project-img-wrapper { height: 200px !important; }
+  .project-grid { gap: 30px !important; }
+
+  /* ---------- TAGS ---------- */
+  .tag { padding: 8px 14px !important; font-size: 0.88rem !important; }
+
+  /* ---------- BUTTONS ---------- */
+  .btn { padding: 15px 28px; font-size: 1rem; }
+
+  /* ---------- FORM & INPUTS ---------- */
+  input, textarea {
+    padding: 14px 16px !important;
+    font-size: 1rem !important;
+    margin-bottom: 18px !important;
+    border-radius: 14px !important;
   }
 
-  /* 7. Reduce font sizes for small screens */
-  .hero-text h1,
-  .animated-name {
-    font-size: 2.8rem !important;
+  /* ---------- SOCIAL LINKS ---------- */
+  .social-links {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
   }
-  .skills-carousel,
-  .hero-text h2 {
-    font-size: 1.4rem !important;
-  }
-  .section-title {
-    font-size: 2.2rem !important;
-  }
-  .project-info h3 {
-    font-size: 1.4rem !important;
-  }
-  .container {
-    padding: 120px 5% 60px !important;
-  }
-  .glass-card {
-    padding: 24px !important;
-  }
-  .project-info {
-    padding: 24px !important;
-  }
-  .tag {
-    padding: 8px 16px !important;
-    font-size: 0.9rem !important;
+  .social-links a {
+    padding: 12px 18px !important;
+    font-size: 1rem !important;
+    border-radius: 14px !important;
   }
 }
 
+/* =============================================
+   SMALL PHONES (≤ 480px)
+   ============================================= */
+@media (max-width: 480px) {
+  .hero-text h1, .animated-name { font-size: 2.1rem !important; }
+  .skills-carousel, .hero-text h2 { font-size: 1.15rem !important; }
+  .section-title { font-size: 1.7rem !important; }
+  .brand { font-size: 1.3rem; }
+  .hero-image { width: 200px !important; height: 260px !important; }
+  .container { padding: 90px 4% 50px !important; }
+  .glass-card { padding: 18px !important; }
+  .section-title { margin-bottom: 36px !important; }
+}
+
+/* =============================================
+   VERY SMALL PHONES (≤ 360px)
+   ============================================= */
+@media (max-width: 360px) {
+  .hero-text h1, .animated-name { font-size: 1.8rem !important; }
+  .section-title { font-size: 1.5rem !important; }
+  .hero-image { width: 170px !important; height: 220px !important; }
+  .btn { padding: 13px 20px; font-size: 0.95rem; }
+  .tag { padding: 7px 12px !important; font-size: 0.82rem !important; }
+}
