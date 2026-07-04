@@ -52,6 +52,10 @@ body {
   opacity: 0.7;
   mix-blend-mode: color-dodge;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .blob.top-left {
   width: 600px;
@@ -122,6 +126,7 @@ nav {
   font-weight: 800;
   background: linear-gradient(90deg, var(--cyan), var(--purple));
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   text-decoration: none;
   letter-spacing: 1px;
@@ -256,6 +261,7 @@ body.dark-mode input:checked + .ios-slider {
     margin-bottom: 15px;
     background: linear-gradient(45deg, var(--cyan), var(--purple));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
 }
 .glass-card h2 { font-size: 2.2rem; }
@@ -329,6 +335,7 @@ body.dark-mode input:checked + .ios-slider {
     margin-bottom: 10px;
     background: linear-gradient(45deg, var(--cyan), var(--purple));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
 }
 .project-info ul {
@@ -360,6 +367,7 @@ body.dark-mode input:checked + .ios-slider {
   letter-spacing: -1px;
   background: linear-gradient(135deg, var(--cyan), var(--purple), #fff);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   margin-bottom: 15px;
   animation: slideUp 0.8s ease forwards;
@@ -464,6 +472,7 @@ body.dark-mode input:checked + .ios-slider {
   margin-bottom: 60px;
   background: linear-gradient(90deg, var(--cyan), var(--purple));
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -580,6 +589,9 @@ input:focus, textarea:focus {
 
 /* Responsiveness */
 @media (max-width: 900px) {
+  :root {
+    --glass-blur: blur(15px);
+  }
   nav { flex-direction: column; gap: 15px; padding: 20px; }
   .nav-links { flex-wrap: wrap; justify-content: center; display: flex; gap: 15px; }
   .hero { flex-direction: column; text-align: center; margin-top: 80px; }
@@ -587,4 +599,23 @@ input:focus, textarea:focus {
   .hero-image { width: 300px; height: 400px; margin: 0 auto; }
   .glass-project-card { flex-direction: column; }
   .project-img-wrapper { max-width: 100%; height: 250px; }
+
+  /* Disable heavy animations and complex mix-blend-modes on mobile to prevent lag / glitches */
+  .blob {
+    animation: none !important;
+    mix-blend-mode: normal !important;
+    opacity: 0.25 !important;
+  }
+  
+  .hero-image {
+    animation: fadeIn 1.5s ease forwards !important; /* Remove floating animation to reduce repaint cost */
+  }
+
+  /* Remove scale/translate on hover for touch screens to prevent sticky hover states */
+  .glass-card:hover, .glass-project-card:hover {
+    transform: none !important;
+  }
+  .tag:hover {
+    transform: none !important;
+  }
 }

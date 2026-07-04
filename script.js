@@ -20,11 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Handle Active Navigation Link matching current page URL
     const navLinks = document.querySelectorAll('.nav-links a.nav-item');
-    const currentPath = window.location.pathname.split('/').pop();
+    const currentPath = window.location.pathname.toLowerCase();
     
     navLinks.forEach(link => {
-        const linkPath = link.getAttribute('href');
-        if (currentPath === linkPath || (currentPath === '' && linkPath === 'index.html')) {
+        const linkPath = link.getAttribute('href').toLowerCase();
+        const cleanLinkPath = linkPath.replace('.html', '');
+        
+        if (
+            (currentPath.endsWith(linkPath)) || 
+            (currentPath.endsWith(cleanLinkPath)) ||
+            (currentPath === '/' && cleanLinkPath === 'index') ||
+            (currentPath.endsWith('/') && cleanLinkPath === 'index')
+        ) {
             link.classList.add('active');
         }
     });
