@@ -43,6 +43,9 @@ body.dark-mode {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
+a, button, input, textarea, select, .glass-card, .glass-project-card {
+  touch-action: manipulation;
+}
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Outfit', sans-serif;
@@ -199,10 +202,12 @@ body.dark-mode .ios-slider { background-color: #475569; }
   padding: 30px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.glass-card:hover, .glass-project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 20px -8px rgba(0,0,0,0.1);
-  border-color: var(--accent-1);
+@media (hover: hover) {
+  .glass-card:hover, .glass-project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -8px rgba(0,0,0,0.1);
+    border-color: var(--accent-1);
+  }
 }
 
 .glass-card h3 {
@@ -270,17 +275,30 @@ body.dark-mode .ios-slider { background-color: #475569; }
   border-radius: var(--radius-sm);
   transition: background 0.2s ease;
 }
-.btn:hover, .btn:active {
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--accent-hover);
+  }
+}
+.btn:active {
   background: var(--accent-hover);
+  transform: scale(0.96);
+  transition: transform 0.1s ease, background 0.2s ease;
 }
 .btn.outline {
   background: transparent;
   border: 1px solid var(--accent-1);
   color: var(--accent-1) !important;
 }
-.btn.outline:hover, .btn.outline:active {
+.btn.outline:active {
   background: var(--accent-1);
   color: #ffffff !important;
+}
+@media (hover: hover) {
+  .btn.outline:hover {
+    background: var(--accent-1);
+    color: #ffffff !important;
+  }
 }
 
 /* Tags */
@@ -326,10 +344,16 @@ input:focus, textarea:focus {
   font-weight: 500;
   transition: background 0.2s ease;
 }
-.social-links a:hover {
-  background: var(--accent-1);
-  color: #ffffff;
-  border-color: var(--accent-1);
+@media (hover: hover) {
+  .social-links a:hover {
+    background: var(--accent-1);
+    color: #ffffff;
+    border-color: var(--accent-1);
+  }
+}
+.social-links a:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease;
 }
 
 /* Hamburger Menu */
@@ -340,6 +364,10 @@ input:focus, textarea:focus {
   align-items: center;
   gap: 6px;
   width: 48px; height: 48px; /* MIN TOUCH TARGET */
+  transition: transform 0.1s ease;
+}
+.hamburger:active {
+  transform: scale(0.92);
 }
 .hamburger span {
   display: block;
@@ -398,6 +426,10 @@ input:focus, textarea:focus {
     width: 100%;
     text-align: center;
     border-bottom: 1px solid var(--card-border);
+    transition: background 0.1s ease, color 0.2s ease;
+  }
+  .nav-links a.nav-item:active {
+    background: var(--bg-secondary);
   }
   .nav-links a.nav-item:last-child,
   .nav-links a.nav-item:nth-last-child(2) {
